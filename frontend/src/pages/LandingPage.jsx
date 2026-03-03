@@ -1,0 +1,141 @@
+import { Link } from 'react-router-dom'
+import { Zap, Image, Video, QrCode, BarChart3, ArrowRight, CheckCircle2, Scan } from 'lucide-react'
+
+const features = [
+    { icon: Image, title: 'Upload Image Targets', desc: 'Upload any real-world image — painting, poster, product. It becomes a scannable AR target.' },
+    { icon: Video, title: 'Link AR Content', desc: 'Attach videos, PDFs, 3D info panels to each image. Content appears instantly on scan.' },
+    { icon: QrCode, title: 'Generate Scanner', desc: 'Get a unique QR code & URL. Share it with visitors. No app download needed.' },
+    { icon: BarChart3, title: 'Track Analytics', desc: 'See total scans, unique visitors, most viewed targets, and daily engagement charts.' },
+]
+
+const steps = [
+    'Create an AR Room for your space',
+    'Upload images that visitors will scan',
+    'Attach videos or PDFs to each image',
+    'Generate your scanner QR code',
+    'Visitors scan → see AR content',
+]
+
+const useCases = ['Museums', 'Art Galleries', 'Real Estate', 'Events & Expos', 'Retail Products', 'Education']
+
+export default function LandingPage() {
+    return (
+        <div className="min-h-screen bg-dark-950 text-white">
+            {/* Nav */}
+            <nav className="border-b border-dark-800 sticky top-0 z-50 bg-dark-950/80 backdrop-blur-md">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+                    <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-glow-primary">
+                            <Zap className="w-5 h-5 text-white" />
+                        </div>
+                        <span className="text-lg font-bold">Phygital<span className="text-primary-400">.space</span></span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <Link to="/login" className="btn-ghost">Sign in</Link>
+                        <Link to="/register" className="btn-primary">Get Started Free</Link>
+                    </div>
+                </div>
+            </nav>
+
+            {/* Hero */}
+            <section className="relative overflow-hidden pt-24 pb-32">
+                <div className="orb w-[600px] h-[600px] bg-primary-600 top-[-200px] left-1/2 -translate-x-1/2" style={{ opacity: 0.08 }} />
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-600/20 border border-primary-600/30 text-primary-300 text-sm font-medium mb-8">
+                        <Scan size={14} />
+                        <span>WebAR — No app download required</span>
+                    </div>
+                    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-6">
+                        Turn Physical Spaces<br />
+                        into <span className="gradient-text">AR Experiences</span>
+                    </h1>
+                    <p className="text-xl text-dark-300 max-w-2xl mx-auto mb-10">
+                        Phygital.space lets museums, galleries and events overlay digital content on real-world images —
+                        instantly, in the browser, no app required.
+                    </p>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <Link to="/register" className="btn-primary btn-lg animate-pulse-glow">
+                            Start Building Free <ArrowRight size={18} />
+                        </Link>
+                        <Link to="/login" className="btn-secondary btn-lg">Sign In</Link>
+                    </div>
+
+                    {/* Use cases */}
+                    <div className="flex flex-wrap items-center justify-center gap-2 mt-10">
+                        {useCases.map(u => (
+                            <span key={u} className="badge-blue text-xs px-3 py-1">{u}</span>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* How it works */}
+            <section className="py-20 border-t border-dark-800">
+                <div className="max-w-4xl mx-auto px-4 sm:px-6">
+                    <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
+                    <div className="space-y-4">
+                        {steps.map((step, i) => (
+                            <div key={i} className="flex items-center gap-4 card p-4 card-hover">
+                                <div className="w-8 h-8 rounded-full bg-primary-600/20 border border-primary-600/30 flex items-center justify-center text-primary-400 font-bold text-sm flex-shrink-0">
+                                    {i + 1}
+                                </div>
+                                <span className="text-dark-200">{step}</span>
+                                <CheckCircle2 size={16} className="ml-auto text-emerald-400 flex-shrink-0" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Features */}
+            <section className="py-20 border-t border-dark-800">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                    <h2 className="text-3xl font-bold text-center mb-4">Everything You Need</h2>
+                    <p className="text-dark-300 text-center mb-12">Powerful tools for AR experience creators</p>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {features.map(({ icon: Icon, title, desc }) => (
+                            <div key={title} className="card-hover p-6">
+                                <div className="w-12 h-12 rounded-xl bg-primary-600/20 border border-primary-600/30 flex items-center justify-center mb-4">
+                                    <Icon size={22} className="text-primary-400" />
+                                </div>
+                                <h3 className="font-semibold text-white mb-2">{title}</h3>
+                                <p className="text-sm text-dark-300 leading-relaxed">{desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* CTA */}
+            <section className="py-24 border-t border-dark-800">
+                <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+                    <div className="card p-10">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center mx-auto mb-6 shadow-glow-primary">
+                            <Zap className="w-8 h-8 text-white" />
+                        </div>
+                        <h2 className="text-3xl font-bold mb-4">Ready to go Phygital?</h2>
+                        <p className="text-dark-300 mb-8">Create your first AR room in minutes. No credit card needed.</p>
+                        <Link to="/register" className="btn-primary btn-lg">
+                            Create Free Account <ArrowRight size={18} />
+                        </Link>
+                    </div>
+                </div>
+            </section>
+
+            {/* Footer */}
+            <footer className="border-t border-dark-800 py-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-2">
+                        <Zap size={16} className="text-primary-400" />
+                        <span className="text-sm text-dark-300">© 2024 Phygital.space. Bridge Physical + Digital.</span>
+                    </div>
+                    <div className="flex gap-6 text-sm text-dark-400">
+                        <a href="#" className="hover:text-white transition-colors">Privacy</a>
+                        <a href="#" className="hover:text-white transition-colors">Terms</a>
+                        <a href="#" className="hover:text-white transition-colors">Contact</a>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    )
+}
