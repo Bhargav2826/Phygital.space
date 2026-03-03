@@ -6,6 +6,22 @@ import toast from 'react-hot-toast'
 import { Zap, Mail, Lock, Eye, EyeOff, User, Building2, ArrowRight } from 'lucide-react'
 import Spinner from '../../components/UI/Spinner'
 
+const Field = ({ id, label, icon: Icon, form, setForm, ...props }) => (
+    <div className="form-group text-left">
+        <label htmlFor={id} className="label">{label}</label>
+        <div className="relative">
+            <Icon size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-dark-400" />
+            <input
+                id={id}
+                className="input pl-10"
+                onChange={e => setForm(p => ({ ...p, [id]: e.target.value }))}
+                value={form[id]}
+                {...props}
+            />
+        </div>
+    </div>
+)
+
 export default function Register() {
     const [form, setForm] = useState({ name: '', email: '', password: '', organization: '' })
     const [showPw, setShowPw] = useState(false)
@@ -28,40 +44,30 @@ export default function Register() {
         }
     }
 
-    const Field = ({ id, label, icon: Icon, ...props }) => (
-        <div className="form-group">
-            <label htmlFor={id} className="label">{label}</label>
-            <div className="relative">
-                <Icon size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-dark-400" />
-                <input id={id} className="input pl-10" onChange={e => setForm(p => ({ ...p, [id]: e.target.value }))} value={form[id]} {...props} />
-            </div>
-        </div>
-    )
-
     return (
-        <div className="min-h-screen bg-hero-gradient flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-hero-gradient flex items-center justify-center p-4 sm:p-6 relative overflow-hidden">
             <div className="orb w-96 h-96 bg-primary-600 top-[-100px] right-[-100px]" />
             <div className="orb w-80 h-80 bg-accent-500 bottom-[-80px] left-[-80px]" />
 
             <div className="w-full max-w-md relative z-10 animate-slide-up">
-                <div className="text-center mb-8">
-                    <Link to="/" className="inline-flex items-center gap-3 mb-6">
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-glow-primary">
-                            <Zap className="w-6 h-6 text-white" />
+                <div className="text-center mb-6 sm:mb-8">
+                    <Link to="/" className="inline-flex items-center gap-3 mb-4 sm:mb-6">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-glow-primary">
+                            <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                         </div>
-                        <span className="text-2xl font-bold text-white">Phygital<span className="text-primary-400">.space</span></span>
+                        <span className="text-xl sm:text-2xl font-bold text-white">Phygital<span className="text-primary-400">.space</span></span>
                     </Link>
-                    <h1 className="text-3xl font-bold text-white mb-2">Create your account</h1>
-                    <p className="text-dark-300">Start building AR experiences for free</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Create your account</h1>
+                    <p className="text-dark-300 text-sm sm:text-base px-4">Start building AR experiences for free</p>
                 </div>
 
-                <div className="card p-8">
+                <div className="card p-6 sm:p-8">
                     <form onSubmit={handleSubmit} className="space-y-4">
-                        <Field id="name" label="Full name" icon={User} type="text" placeholder="John Smith" required />
-                        <Field id="organization" label="Organization (optional)" icon={Building2} type="text" placeholder="City Museum" />
-                        <Field id="email" label="Email address" icon={Mail} type="email" placeholder="you@museum.com" required />
+                        <Field id="name" label="Full name" icon={User} type="text" placeholder="John Smith" form={form} setForm={setForm} required />
+                        <Field id="organization" label="Organization (optional)" icon={Building2} type="text" placeholder="City Museum" form={form} setForm={setForm} />
+                        <Field id="email" label="Email address" icon={Mail} type="email" placeholder="you@museum.com" form={form} setForm={setForm} required />
 
-                        <div className="form-group">
+                        <div className="form-group text-left">
                             <label htmlFor="password" className="label">Password</label>
                             <div className="relative">
                                 <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-dark-400" />
@@ -89,7 +95,7 @@ export default function Register() {
                     </p>
                 </div>
 
-                <p className="text-center text-xs text-dark-400 mt-4">
+                <p className="text-center text-[10px] sm:text-xs text-dark-400 mt-4 px-6">
                     By registering you agree to our Terms of Service & Privacy Policy
                 </p>
             </div>
