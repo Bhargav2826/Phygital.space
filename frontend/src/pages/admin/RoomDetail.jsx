@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import api from '../../api/axios'
 import toast from 'react-hot-toast'
@@ -33,6 +33,7 @@ export default function RoomDetail() {
     const [loading, setLoading] = useState(true)
     const [publishing, setPublishing] = useState(false)
     const [bundling, setBundling] = useState(false)
+    const autoSyncLockRef = useRef(false)
 
     const fetchRoom = useCallback(async () => {
         try {
@@ -62,7 +63,11 @@ export default function RoomDetail() {
         setPublishing(true)
         try {
             const { data } = await api.post(`/rooms/${roomId}/publish`)
-            setRoom(r => ({ ...r, isPublished: true }))
+            if (data.room) {
+                setRoom(data.room)
+            } else {
+                setRoom(r => ({ ...r, isPublished: true }))
+            }
             toast.success('Room is now live! 🎉')
         } catch (err) {
             toast.error(err.response?.data?.message || 'Failed to publish')
@@ -79,10 +84,12 @@ export default function RoomDetail() {
         } catch { toast.error('Failed to delete') }
     }
 
-    const handleBuildTracking = async () => {
-        if (targets.length === 0) return toast.error('Add some targets first')
+    const handleBuildTracking = async (isAuto = false) => {
+        if (targets.length === 0) return
+        if (!isAuto && bundling) return
+
         setBundling(true)
-        const tid = toast.loading('Bundling targets into one trackable hub...')
+        const tid = isAuto ? null : toast.loading('Bundling targets into one trackable hub...')
 
         try {
             // 1. Download all images
@@ -118,17 +125,36 @@ export default function RoomDetail() {
                 headers: { 'Content-Type': 'multipart/form-data' }
             })
 
-            setRoom(prev => ({ ...prev, mindFileUrl: resData.mindFileUrl }))
-            toast.success('AR Tracking Hub Ready! Multiple targets supported.', { id: tid })
+            setRoom(prev => ({ ...prev, mindFileUrl: resData.mindFileUrl, bundledTargetCount: targetsCount }))
+            if (!isAuto) {
+                toast.success('AR Tracking Hub Ready! Multiple targets supported.', { id: tid })
+            }
         } catch (err) {
             console.error('Bundling error:', err)
-            toast.error(err.message || 'Failed to build tracking hub', { id: tid })
+            if (!isAuto) {
+                toast.error(err.message || 'Failed to build tracking hub', { id: tid })
+            }
         } finally {
             setBundling(false)
+            autoSyncLockRef.current = false
         }
     }
 
     const readyTargetsCount = targets.filter(t => t.mindFileStatus === 'ready').length
+
+    // 🤖 AUTO-SYNC: Sync tracking hub whenever targets are added/ready
+    useEffect(() => {
+        if (!room || targets.length === 0 || bundling || autoSyncLockRef.current) return
+
+        const allReady = targets.every(t => t.mindFileStatus === 'ready')
+        const needsSync = allReady && (targets.length !== (room.bundledTargetCount || 0) || !room.mindFileUrl)
+
+        if (needsSync) {
+            console.log(`[AutoSync] Triggering sync: ${targets.length} targets ready, previously ${room.bundledTargetCount || 0} bundled.`)
+            autoSyncLockRef.current = true
+            handleBuildTracking(true)
+        }
+    }, [targets, room, bundling])
 
     if (loading) return <div className="flex items-center justify-center py-20"><Spinner size="lg" /></div>
     if (!room) return null

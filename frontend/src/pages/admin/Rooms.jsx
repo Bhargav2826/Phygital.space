@@ -29,7 +29,7 @@ export default function Rooms() {
             setRooms(p => [data.room, ...p])
             setCreateOpen(false)
             setForm({ name: '', location: '', description: '' })
-            toast.success('AR Room created!')
+            toast.success('Space created!')
         } catch (err) {
             toast.error(err.response?.data?.message || 'Failed to create room')
         } finally { setSubmitting(false) }
@@ -50,11 +50,11 @@ export default function Rooms() {
         <div className="animate-fade-in">
             <div className="page-header">
                 <div>
-                    <h1 className="page-title">AR Rooms</h1>
+                    <h1 className="page-title">My Spaces</h1>
                     <p className="page-subtitle">Manage your phygital spaces</p>
                 </div>
                 <button onClick={() => setCreateOpen(true)} className="btn-primary">
-                    <Plus size={16} /> New Room
+                    <Plus size={16} /> New Space
                 </button>
             </div>
 

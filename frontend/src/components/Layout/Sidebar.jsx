@@ -7,7 +7,7 @@ import {
 
 const nav = [
     { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { to: '/dashboard/rooms', label: 'AR Rooms', icon: Building2 },
+    { to: '/dashboard/rooms', label: 'My Spaces', icon: Building2 },
 ]
 
 export default function Sidebar({ onClose }) {

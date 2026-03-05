@@ -54,7 +54,7 @@ export default function Dashboard() {
             {/* Recent rooms */}
             <div className="card">
                 <div className="flex items-center justify-between px-6 py-4 border-b border-dark-700">
-                    <h2 className="text-base font-semibold text-white">Recent AR Rooms</h2>
+                    <h2 className="text-base font-semibold text-white">Recent My Spaces</h2>
                     <Link to="/dashboard/rooms" className="text-sm text-primary-400 hover:text-primary-300 flex items-center gap-1 transition-colors">
                         View all <ArrowRight size={14} />
                     </Link>

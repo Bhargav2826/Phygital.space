@@ -96,7 +96,7 @@ export default function UploadTarget() {
         const file = e.target.files[0]
         if (!file) return
         setImageFile(file)
-        setTargetName(file.name.replace(/\.[^.]+$/, ''))
+        // Removed pre-filling target name so user has to enter a semantic name
         const reader = new FileReader()
         reader.onload = (ev) => setImagePreview(ev.target.result)
         reader.readAsDataURL(file)
@@ -104,6 +104,7 @@ export default function UploadTarget() {
 
     const handleUploadImage = async () => {
         if (!imageFile) { toast.error('Please select an image'); return }
+        if (!targetName || !targetName.trim()) { toast.error('Please give a clear, related Item Name'); return }
         setLoading(true)
         const toastId = toast.loading('Compiling AR tracking data in your browser...')
 
@@ -203,7 +204,8 @@ export default function UploadTarget() {
 
                     {imageFile && (
                         <div className="form-group">
-                            <label className="label">Target Name</label>
+                            <label className="label">Item Name</label>
+                            <p className="text-dark-400 text-xs mb-2 leading-tight">Please give a clear, related name. Users will search for this exact name in the Phygitalized Items search bar.</p>
                             <input className="input" value={targetName} onChange={e => setTargetName(e.target.value)} placeholder="e.g. Mona Lisa Painting" required />
                         </div>
                     )}

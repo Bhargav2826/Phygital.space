@@ -44,7 +44,7 @@ export default function Login() {
                         <span className="text-xl sm:text-2xl font-bold text-white">Phygital<span className="text-primary-400">.space</span></span>
                     </Link>
                     <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Welcome back</h1>
-                    <p className="text-dark-300 text-sm sm:text-base">Sign in to manage your AR rooms</p>
+                    <p className="text-dark-300 text-sm sm:text-base">Sign in to manage your spaces</p>
                 </div>
 
                 <div className="card p-6 sm:p-8">

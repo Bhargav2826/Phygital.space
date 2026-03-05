@@ -177,14 +177,18 @@ const publishRoom = async (req, res) => {
         throw err;
     }
 
-    room.isPublished = true;
-    await room.save();
+    const updatedRoom = await Room.findByIdAndUpdate(
+        req.params.id,
+        { isPublished: true },
+        { new: true }
+    );
 
     res.json({
         success: true,
         message: 'Room published! Your scanner is now live.',
-        scannerUrl: room.scannerUrl,
-        qrCodeUrl: room.qrCodeUrl,
+        room: updatedRoom,
+        scannerUrl: updatedRoom.scannerUrl,
+        qrCodeUrl: updatedRoom.qrCodeUrl,
     });
 };
 
@@ -220,8 +224,11 @@ const uploadBundledMind = async (req, res) => {
         await deleteFromCloudinary(room.mindFilePublicId, 'raw');
     }
 
+    const readyTargetsCount = await Target.countDocuments({ roomId: room._id, mindFileStatus: 'ready' });
+
     room.mindFileUrl = result.url;
     room.mindFilePublicId = result.publicId;
+    room.bundledTargetCount = readyTargetsCount;
     await room.save();
 
     res.json({ success: true, message: 'AR tracking data updated successfully', mindFileUrl: result.url });
