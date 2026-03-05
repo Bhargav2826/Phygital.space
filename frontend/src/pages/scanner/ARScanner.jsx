@@ -29,7 +29,8 @@ function GlassVideoModal({ target, videoEl, onClose }) {
     const [duration, setDuration] = useState(0)
     const [showControls, setShowControls] = useState(true)
     const [isDragging, setIsDragging] = useState(false)
-    const [tapFlash, setTapFlash] = useState(false)  // flash icon on tap
+    const [tapFlash, setTapFlash] = useState(false)
+    const [videoRatio, setVideoRatio] = useState(16 / 9)
 
     const progressRef = useRef(null)
     const hideTimerRef = useRef(null)
@@ -72,8 +73,11 @@ function GlassVideoModal({ target, videoEl, onClose }) {
         const ctx = canvas.getContext('2d')
         const draw = () => {
             if (videoEl.readyState >= 2 && videoEl.videoWidth) {
-                if (canvas.width !== videoEl.videoWidth) canvas.width = videoEl.videoWidth
-                if (canvas.height !== videoEl.videoHeight) canvas.height = videoEl.videoHeight
+                if (canvas.width !== videoEl.videoWidth) {
+                    canvas.width = videoEl.videoWidth
+                    canvas.height = videoEl.videoHeight
+                    setVideoRatio(videoEl.videoWidth / videoEl.videoHeight)
+                }
                 ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height)
             }
             rafRef.current = requestAnimationFrame(draw)
@@ -145,7 +149,7 @@ function GlassVideoModal({ target, videoEl, onClose }) {
         >
             {/* ── Glass Card — centered, full mobile width ── */}
             <div
-                className="w-[92vw] max-w-sm animate-in zoom-in-95 fade-in duration-400"
+                className="w-[92vw] max-w-sm animate-in zoom-in-95 fade-in duration-400 max-h-[90vh] flex flex-col"
                 style={{
                     background: 'linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%)',
                     backdropFilter: 'blur(40px) saturate(200%)',
@@ -196,10 +200,10 @@ function GlassVideoModal({ target, videoEl, onClose }) {
                 {/* ── Video area ── */}
                 <div className="px-3 pb-3">
                     <div
-                        className="relative overflow-hidden select-none"
+                        className="relative overflow-hidden select-none w-full"
                         style={{
                             borderRadius: '1.75rem',
-                            aspectRatio: '16/9',
+                            aspectRatio: `${videoRatio}`,
                             background: '#000',
                             border: '1px solid rgba(255,255,255,0.08)',
                         }}
@@ -212,7 +216,7 @@ function GlassVideoModal({ target, videoEl, onClose }) {
                             style={{
                                 width: '100%',
                                 height: '100%',
-                                objectFit: 'cover',
+                                objectFit: 'contain',
                                 borderRadius: '1.75rem',
                                 display: 'block',
                             }}
