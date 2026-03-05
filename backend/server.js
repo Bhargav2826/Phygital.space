@@ -22,6 +22,10 @@ connectDB();
 
 const app = express();
 
+// Trust the first proxy (Render / any single reverse-proxy deployment)
+// Required so express-rate-limit can read the real IP from X-Forwarded-For
+app.set('trust proxy', 1);
+
 // Security middleware
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
