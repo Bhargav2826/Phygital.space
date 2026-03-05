@@ -40,34 +40,34 @@ export default function AnalyticsDashboard() {
 
     return (
         <div className="animate-fade-in">
-            <div className="flex items-center gap-4 mb-8">
-                <Link to={`/dashboard/rooms/${roomId}`} className="btn-icon bg-dark-700 hover:bg-dark-600 text-dark-300"><ArrowLeft size={18} /></Link>
-                <div>
-                    <h1 className="page-title">Room Analytics</h1>
-                    <p className="page-subtitle">Track performance of your AR room</p>
+            <div className="flex items-center gap-3 mb-6 sm:mb-8">
+                <Link to={`/dashboard/rooms/${roomId}`} className="btn-icon bg-dark-700 hover:bg-dark-600 text-dark-300 flex-shrink-0"><ArrowLeft size={18} /></Link>
+                <div className="min-w-0">
+                    <h1 className="page-title text-xl sm:text-2xl">Room Analytics</h1>
+                    <p className="page-subtitle hidden sm:block">Track performance of your AR room</p>
                 </div>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
                 {stats.map(({ label, value, icon: Icon, bg, text }) => (
-                    <div key={label} className="stat-card">
-                        <div className={`stat-icon border ${bg}`}><Icon size={20} className={text} /></div>
-                        <div>
-                            <p className="text-2xl font-bold text-white">{value}</p>
-                            <p className="text-sm text-dark-300">{label}</p>
+                    <div key={label} className="stat-card p-4 sm:p-6">
+                        <div className={`stat-icon border ${bg} w-9 h-9 sm:w-12 sm:h-12`}><Icon size={16} className={`sm:w-5 sm:h-5 ${text}`} /></div>
+                        <div className="min-w-0">
+                            <p className="text-lg sm:text-2xl font-bold text-white truncate">{value}</p>
+                            <p className="text-xs sm:text-sm text-dark-300 leading-tight">{label}</p>
                         </div>
                     </div>
                 ))}
             </div>
 
             {/* Charts */}
-            <div className="grid lg:grid-cols-2 gap-6 mb-8">
-                <div className="card p-5">
-                    <h3 className="text-sm font-semibold text-dark-200 mb-4">Daily Scans (Last 14 days)</h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div className="card p-4 sm:p-5 overflow-hidden">
+                    <h3 className="text-xs sm:text-sm font-semibold text-dark-200 mb-3 sm:mb-4">Daily Scans (Last 14 days)</h3>
                     {recent.length === 0
                         ? <p className="text-dark-400 text-sm text-center py-8">No scan data yet</p>
-                        : <LineChart
+                        : <div className="overflow-x-auto"><LineChart
                             labels={labels}
                             datasets={[{
                                 label: 'Scans',
@@ -75,21 +75,21 @@ export default function AnalyticsDashboard() {
                                 borderColor: '#6366f1',
                                 backgroundColor: 'rgba(99,102,241,0.1)',
                             }]}
-                        />}
+                        /></div>}
                 </div>
 
-                <div className="card p-5">
-                    <h3 className="text-sm font-semibold text-dark-200 mb-4">Daily Interactions</h3>
+                <div className="card p-4 sm:p-5 overflow-hidden">
+                    <h3 className="text-xs sm:text-sm font-semibold text-dark-200 mb-3 sm:mb-4">Daily Interactions</h3>
                     {recent.length === 0
                         ? <p className="text-dark-400 text-sm text-center py-8">No interaction data yet</p>
-                        : <BarChart
+                        : <div className="overflow-x-auto"><BarChart
                             labels={labels}
                             datasets={[{
                                 label: 'Interactions',
                                 data: recent.map(d => d.interactions),
                                 backgroundColor: 'rgba(6,182,212,0.7)',
                             }]}
-                        />}
+                        /></div>}
                 </div>
             </div>
 

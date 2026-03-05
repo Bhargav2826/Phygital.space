@@ -128,32 +128,47 @@ export default function RoomDetail() {
         }
     }
 
+    const readyTargetsCount = targets.filter(t => t.mindFileStatus === 'ready').length
+
     if (loading) return <div className="flex items-center justify-center py-20"><Spinner size="lg" /></div>
     if (!room) return null
 
     return (
         <div className="animate-fade-in">
             {/* Header */}
-            <div className="flex items-start gap-4 mb-8">
-                <Link to="/dashboard/rooms" className="btn-icon bg-dark-700 hover:bg-dark-600 text-dark-300 mt-1"><ArrowLeft size={18} /></Link>
-                <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 flex-wrap">
-                        <h1 className="page-title">{room.name}</h1>
-                        {room.isPublished ? <span className="badge-green">Live</span> : <span className="badge-gray">Draft</span>}
+            <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-8">
+                {/* Back + Title row */}
+                <div className="flex items-start gap-3 flex-1 min-w-0">
+                    <Link to="/dashboard/rooms" className="btn-icon bg-dark-700 hover:bg-dark-600 text-dark-300 mt-0.5 flex-shrink-0"><ArrowLeft size={18} /></Link>
+                    <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                            <h1 className="page-title text-xl sm:text-2xl">{room.name}</h1>
+                            {room.isPublished ? <span className="badge-green">Live</span> : <span className="badge-gray">Draft</span>}
+                        </div>
+                        <p className="page-subtitle">{room.location}{room.description ? ` · ${room.description}` : ''}</p>
                     </div>
-                    <p className="page-subtitle">{room.location}{room.description ? ` · ${room.description}` : ''}</p>
                 </div>
-                <div className="flex items-center gap-2 flex-wrap">
+                {/* Action buttons — scrollable row on mobile */}
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 flex-shrink-0 hide-scrollbar">
                     {!room.isPublished && (
-                        <button onClick={handlePublish} disabled={publishing || targets.filter(t => t.mindFileStatus === 'ready').length === 0 || !room.mindFileUrl} className="btn-accent">
-                            {publishing ? <Spinner size="sm" /> : <><Globe size={15} />Publish Room</>}
+                        <button
+                            onClick={handlePublish}
+                            disabled={publishing || readyTargetsCount === 0}
+                            title={readyTargetsCount === 0 ? 'Add at least one ready target first' : 'Publish Room'}
+                            className="btn-accent whitespace-nowrap"
+                        >
+                            {publishing ? <Spinner size="sm" /> : <><Globe size={15} />Publish</>}
                         </button>
                     )}
-                    <button onClick={handleBuildTracking} disabled={bundling || targets.length === 0} className={`btn-secondary ${!room.mindFileUrl ? 'border-primary-500/50 shadow-glow-primary/20' : ''}`}>
-                        {bundling ? <Spinner size="sm" /> : <><Zap size={15} className={!room.mindFileUrl ? 'text-primary-400' : ''} />Build Tracking Hub</>}
+                    <button
+                        onClick={handleBuildTracking}
+                        disabled={bundling || targets.length === 0}
+                        className={`btn-secondary whitespace-nowrap ${!room.mindFileUrl ? 'border-primary-500/50' : ''}`}
+                    >
+                        {bundling ? <Spinner size="sm" /> : <><Zap size={15} className={!room.mindFileUrl ? 'text-primary-400' : ''} />Build Hub</>}
                     </button>
-                    <Link to={`/dashboard/rooms/${roomId}/scanner`} className="btn-secondary"><ScanLine size={15} />Scanner</Link>
-                    <Link to={`/dashboard/rooms/${roomId}/analytics`} className="btn-secondary"><BarChart3 size={15} />Analytics</Link>
+                    <Link to={`/dashboard/rooms/${roomId}/scanner`} className="btn-secondary whitespace-nowrap"><ScanLine size={14} /><span className="hidden sm:inline">Scanner</span></Link>
+                    <Link to={`/dashboard/rooms/${roomId}/analytics`} className="btn-secondary whitespace-nowrap"><BarChart3 size={14} /><span className="hidden sm:inline">Analytics</span></Link>
                 </div>
             </div>
 

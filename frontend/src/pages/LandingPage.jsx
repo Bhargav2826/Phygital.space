@@ -30,9 +30,12 @@ export default function LandingPage() {
                         </div>
                         <span className="text-lg font-bold">Phygital<span className="text-primary-400">.space</span></span>
                     </div>
-                    <div className="flex items-center gap-3">
-                        <Link to="/login" className="btn-ghost">Sign in</Link>
-                        <Link to="/register" className="btn-primary">Get Started Free</Link>
+                    <div className="flex items-center gap-2 sm:gap-3">
+                        <Link to="/login" className="hidden xs:inline-flex btn-ghost py-2 px-3 sm:px-5 text-xs sm:text-sm">Sign in</Link>
+                        <Link to="/register" className="btn-primary py-2 px-3 sm:px-5 text-xs sm:text-sm whitespace-nowrap">
+                            <span className="sm:hidden">Get Started</span>
+                            <span className="hidden sm:inline">Get Started Free</span>
+                        </Link>
                     </div>
                 </div>
             </nav>
