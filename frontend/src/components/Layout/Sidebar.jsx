@@ -22,14 +22,11 @@ export default function Sidebar({ onClose }) {
     return (
         <aside className="flex flex-col h-full bg-dark-900 border-r border-dark-700 w-64">
             {/* Logo */}
-            <div className="flex items-center gap-3 px-6 py-5 border-b border-dark-700">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center flex-shrink-0 shadow-glow-primary">
-                    <Zap className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                    <p className="text-white font-bold text-base leading-none">Phygital</p>
-                    <p className="text-primary-400 text-xs font-medium">.space</p>
-                </div>
+            <div className="flex items-center px-6 py-5 border-b border-dark-700">
+                <img src="https://res.cloudinary.com/djoyq5lra/image/upload/v1773035253/file_00000000c35871fd85fb742005c6feb4_nylaiq.png" alt="Phygital Logo" className="h-10 sm:h-12 w-auto object-contain shrink-0" />
+                <span className="-ml-2 sm:-ml-3 text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80 whitespace-nowrap">
+                    Phygital<span className="text-primary-400">.space</span>
+                </span>
             </div>
 
             {/* Nav */}

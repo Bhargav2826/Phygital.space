@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import api from '../../api/axios'
 import { Zap, Camera, X, Info, Play, Pause, Volume2, VolumeX, Maximize2, Search } from 'lucide-react'
 import toast from 'react-hot-toast'
+import logo from '../../assets/logo.png'
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 const getDeviceId = () => {
@@ -613,18 +614,7 @@ export default function ARScanner() {
                 <div className="fixed top-0 left-0 right-0 z-[100] px-4 pt-4 pb-10 bg-gradient-to-b from-black/90 via-black/40 to-transparent pointer-events-none">
                     <div className="max-w-7xl mx-auto flex items-center justify-between gap-4 pointer-events-auto">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 md:w-12 md:h-12 glass rounded-2xl flex items-center justify-center border-white/20 shadow-2xl relative group overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-indigo-600 rounded-2xl opacity-80 group-hover:opacity-100 transition-opacity" />
-                                <Zap className="w-5 h-5 text-white fill-white relative z-10 animate-pulse" />
-                            </div>
-                            <div>
-                                <h1 className="text-white text-base font-black tracking-tighter leading-none">
-                                    PHYGITAL<span className="text-primary-400">.SPACE</span>
-                                </h1>
-                                <p className="text-white/40 text-[8px] font-black uppercase tracking-[0.3em] leading-none mt-0.5">
-                                    Reality Enhanced
-                                </p>
-                            </div>
+                            <img src="https://res.cloudinary.com/djoyq5lra/image/upload/v1773035253/file_00000000c35871fd85fb742005c6feb4_nylaiq.png" alt="Phygital Logo" className="h-12 w-auto object-contain drop-shadow-lg" />
                         </div>
 
                         <div className="flex items-center gap-1.5 sm:gap-2">
@@ -782,8 +772,8 @@ export default function ARScanner() {
                         <div className="bg-dark-950/95 rounded-[2.5rem] p-8 w-full max-w-md border border-white/10 shadow-3xl animate-in slide-in-from-bottom-8 duration-700">
                             <div className="flex items-center justify-between mb-8">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center shadow-lg">
-                                        <Zap size={22} className="text-white fill-white" />
+                                    <div className="flex justify-center flex-shrink-0">
+                                        <img src="https://res.cloudinary.com/djoyq5lra/image/upload/v1773035253/file_00000000c35871fd85fb742005c6feb4_nylaiq.png" alt="Phygital Logo" className="h-10 w-auto object-contain drop-shadow-lg" />
                                     </div>
                                     <div>
                                         <h3 className="text-white font-black text-xl tracking-tight leading-none mb-1">{room?.name}</h3>

@@ -17,14 +17,14 @@ function SASidebar({ onClose }) {
 
     return (
         <aside className="flex flex-col h-full bg-dark-900 border-r border-dark-700 w-64">
-            <div className="flex items-center gap-3 px-6 py-5 border-b border-dark-700">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-accent-500 to-primary-500 flex items-center justify-center shadow-glow-accent">
-                    <Shield className="w-5 h-5 text-white" />
+            <div className="flex flex-col justify-center px-6 py-4 border-b border-dark-700">
+                <div className="flex items-center">
+                    <img src="https://res.cloudinary.com/djoyq5lra/image/upload/v1773035253/file_00000000c35871fd85fb742005c6feb4_nylaiq.png" alt="Phygital Logo" className="h-10 sm:h-12 w-auto object-contain shrink-0" />
+                    <span className="-ml-2 sm:-ml-3 text-lg sm:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80 whitespace-nowrap">
+                        Phygital<span className="text-primary-400">.space</span>
+                    </span>
                 </div>
-                <div>
-                    <p className="text-white font-bold text-base leading-none">Super Admin</p>
-                    <p className="text-accent-400 text-xs font-medium">Phygital.space</p>
-                </div>
+                <span className="text-[10px] text-accent-400 font-bold uppercase tracking-widest mt-0.5 ml-1">Super Admin</span>
             </div>
 
             <nav className="flex-1 px-3 py-4 space-y-1">

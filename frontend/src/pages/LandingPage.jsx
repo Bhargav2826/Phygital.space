@@ -24,11 +24,9 @@ export default function LandingPage() {
             {/* Nav */}
             <nav className="border-b border-dark-800 sticky top-0 z-50 bg-dark-950/80 backdrop-blur-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-                    <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-glow-primary">
-                            <Zap className="w-5 h-5 text-white" />
-                        </div>
-                        <span className="text-lg font-bold">Phygital<span className="text-primary-400">.space</span></span>
+                    <div className="flex items-center">
+                        <img src="https://res.cloudinary.com/djoyq5lra/image/upload/v1773035253/file_00000000c35871fd85fb742005c6feb4_nylaiq.png" alt="Phygital.space" className="h-10 sm:h-12 w-auto object-contain" />
+                        <span className="-ml-3 sm:-ml-4 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">Phygital<span className="text-primary-400">.space</span></span>
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3">
                         <Link to="/login" className="hidden xs:inline-flex btn-ghost py-2 px-3 sm:px-5 text-xs sm:text-sm">Sign in</Link>
@@ -114,8 +112,8 @@ export default function LandingPage() {
                 <div className="max-w-2xl mx-auto px-4 sm:px-6 text-center">
                     <div className="card p-8 sm:p-10 relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-primary-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center mx-auto mb-6 shadow-glow-primary relative z-10 transition-transform group-hover:scale-110">
-                            <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                        <div className="h-16 w-auto flex justify-center mx-auto mb-6 relative z-10 transition-transform group-hover:scale-110">
+                            <img src="https://res.cloudinary.com/djoyq5lra/image/upload/v1773035253/file_00000000c35871fd85fb742005c6feb4_nylaiq.png" alt="Phygital Logo" className="h-full w-auto object-contain" />
                         </div>
                         <h2 className="text-2xl sm:text-3xl font-bold mb-4 px-2 relative z-10">Ready to go Phygital?</h2>
                         <p className="text-sm sm:text-base text-dark-300 mb-8 px-4 relative z-10">Create your first AR room in minutes. No credit card needed.</p>
@@ -130,7 +128,7 @@ export default function LandingPage() {
             <footer className="border-t border-dark-800 py-8 bg-dark-950">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-4">
                     <div className="flex items-center gap-2">
-                        <Zap size={16} className="text-primary-400" />
+                        <img src="https://res.cloudinary.com/djoyq5lra/image/upload/v1773035253/file_00000000c35871fd85fb742005c6feb4_nylaiq.png" alt="Phygital Logo" className="h-6 w-auto object-contain grayscale opacity-50 transition-all hover:grayscale-0 hover:opacity-100" />
                         <span className="text-[11px] sm:text-sm text-dark-400 sm:text-dark-300 text-center sm:text-left leading-tight px-4 sm:px-0">
                             © 2024 Phygital.space. <br className="sm:hidden" /> Bridge Physical + Digital.
                         </span>

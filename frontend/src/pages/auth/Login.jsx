@@ -37,11 +37,9 @@ export default function Login() {
             <div className="w-full max-w-md relative z-10 animate-slide-up">
                 {/* Logo */}
                 <div className="text-center mb-6 sm:mb-8">
-                    <Link to="/" className="inline-flex items-center gap-3 mb-4 sm:mb-6">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-glow-primary">
-                            <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                        </div>
-                        <span className="text-xl sm:text-2xl font-bold text-white">Phygital<span className="text-primary-400">.space</span></span>
+                    <Link to="/" className="inline-flex items-center justify-center mb-4 sm:mb-6">
+                        <img src="https://res.cloudinary.com/djoyq5lra/image/upload/v1773035253/file_00000000c35871fd85fb742005c6feb4_nylaiq.png" alt="Phygital Logo" className="h-14 sm:h-20 w-auto object-contain" />
+                        <span className="-ml-4 sm:-ml-6 text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Phygital<span className="text-primary-400">.space</span></span>
                     </Link>
                     <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Welcome back</h1>
                     <p className="text-dark-300 text-sm sm:text-base">Sign in to manage your spaces</p>
