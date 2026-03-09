@@ -29,6 +29,7 @@ export default function UploadTarget() {
     const [contentFile, setContentFile] = useState(null)
     const [contentTitle, setContentTitle] = useState('')
     const [contentText, setContentText] = useState('')
+    const [uploadProgress, setUploadProgress] = useState(0)
 
     const imageRef = useRef()
     const contentRef = useRef()
@@ -135,18 +136,32 @@ export default function UploadTarget() {
     const handleUploadContent = async () => {
         if (contentType !== 'info' && !contentFile) { toast.error('Please select a file'); return }
         setLoading(true)
+        setUploadProgress(0)
         try {
             const fd = new FormData()
             fd.append('contentType', contentType)
             fd.append('contentTitle', contentTitle)
             fd.append('contentText', contentText)
             if (contentFile) fd.append('content', contentFile)
-            await api.put(`/targets/${createdTarget._id}/content`, fd, { headers: { 'Content-Type': 'multipart/form-data' } })
+
+            await api.put(`/targets/${createdTarget._id}/content`, fd, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+                timeout: 300000, // Increase timeout to 5 minutes for large videos
+                onUploadProgress: (progressEvent) => {
+                    const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+                    setUploadProgress(progress)
+                }
+            })
             toast.success('Content linked!')
             setStep(2)
         } catch (err) {
-            toast.error(err.response?.data?.message || 'Content upload failed')
-        } finally { setLoading(false) }
+            console.error('Content upload error:', err)
+            const errMsg = err.response?.data?.message || err.message || 'Content upload failed'
+            toast.error(errMsg)
+        } finally {
+            setLoading(false)
+            setUploadProgress(0)
+        }
     }
 
     const contentTypes = [
@@ -257,6 +272,21 @@ export default function UploadTarget() {
                                     : <p className="text-dark-300 text-sm">Click to select {contentType} file</p>}
                             </div>
                             <input ref={contentRef} type="file" accept={contentTypes.find(c => c.value === contentType)?.accept} className="hidden" onChange={e => setContentFile(e.target.files[0])} />
+                        </div>
+                    )}
+
+                    {loading && uploadProgress > 0 && (
+                        <div className="space-y-2">
+                            <div className="flex justify-between text-xs text-dark-400">
+                                <span>Uploading to server...</span>
+                                <span>{uploadProgress}%</span>
+                            </div>
+                            <div className="w-full h-1.5 bg-dark-700 rounded-full overflow-hidden">
+                                <div
+                                    className="h-full bg-primary-500 transition-all duration-300"
+                                    style={{ width: `${uploadProgress}%` }}
+                                />
+                            </div>
                         </div>
                     )}
 

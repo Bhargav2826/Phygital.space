@@ -39,10 +39,25 @@ const uploadToCloudinary = (buffer, folder = 'phygital', resourceType = 'auto', 
             options.public_id = `Phygital_${randomSuffix}.mind`;
         }
 
-        const uploadStream = cloudinary.uploader.upload_stream(
-            options,
+        const uploadOptions = {
+            ...options
+        };
+
+        // For videos or large files, use upload_large_stream which is more reliable on live servers
+        const isLargeFile = buffer.length > 10 * 1024 * 1024; // > 10MB
+        const isVideo = resourceType === 'video';
+
+        const uploader = (isVideo || isLargeFile)
+            ? cloudinary.uploader.upload_large_stream
+            : cloudinary.uploader.upload_stream;
+
+        const uploadStream = uploader(
+            uploadOptions,
             (error, result) => {
-                if (error) return reject(error);
+                if (error) {
+                    console.error('[CLOUDINARY UPLOAD ERROR]', error);
+                    return reject(error);
+                }
                 resolve({ url: result.secure_url, publicId: result.public_id });
             }
         );
@@ -53,12 +68,7 @@ const uploadToCloudinary = (buffer, folder = 'phygital', resourceType = 'auto', 
             reject(err);
         });
 
-        // Use end() directly on the stream buffer if streamifier fails with large files
-        if (buffer.length > 5 * 1024 * 1024) { // if larger than 5MB
-            uploadStream.end(buffer);
-        } else {
-            streamifier.createReadStream(buffer).pipe(uploadStream);
-        }
+        streamifier.createReadStream(buffer).pipe(uploadStream);
     });
 };
 
