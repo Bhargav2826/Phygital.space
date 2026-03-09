@@ -53,7 +53,12 @@ const uploadToCloudinary = (buffer, folder = 'phygital', resourceType = 'auto', 
             reject(err);
         });
 
-        streamifier.createReadStream(buffer).pipe(uploadStream);
+        // Use end() directly on the stream buffer if streamifier fails with large files
+        if (buffer.length > 5 * 1024 * 1024) { // if larger than 5MB
+            uploadStream.end(buffer);
+        } else {
+            streamifier.createReadStream(buffer).pipe(uploadStream);
+        }
     });
 };
 
