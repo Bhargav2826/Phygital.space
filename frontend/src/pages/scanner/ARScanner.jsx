@@ -456,7 +456,7 @@ export default function ARScanner() {
     const initAR = async (readyTargets, mindFileUrl) => {
         try {
             const [THREE, { MindARThree }] = await Promise.all([
-                import(/* @vite-ignore */ 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js'),
+                import(/* @vite-ignore */ 'https://cdn.jsdelivr.net/npm/three@0.150.0/build/three.module.js'),
                 import(/* @vite-ignore */ 'https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-three.prod.js')
             ])
 
@@ -486,6 +486,11 @@ export default function ARScanner() {
                     const video = document.createElement('video')
                     video.src = target.contentUrl
                     video.crossOrigin = 'anonymous'
+                    video.onerror = () => {
+                        console.error(`[AR] Failed to load video for ${target.name}: ${target.contentUrl}`);
+                        toast.error(`Missing video for ${target.name}. Please re-upload in dashboard.`);
+                        video.dataset.error = 'true';
+                    }
                     video.loop = true
                     video.muted = false
                     video.playsInline = true
@@ -500,6 +505,12 @@ export default function ARScanner() {
                     })
 
                     anchor.onTargetFound = () => {
+                        if (video.dataset.error === 'true') {
+                            setActiveTarget(target)
+                            setShowContent(true)
+                            setShowGuide(false)
+                            return
+                        }
                         video.play().catch(() => {
                             video.muted = true
                             video.play().catch(e => console.error('Autoplay failed:', e))

@@ -100,9 +100,18 @@ const getRoom = async (req, res) => {
  * @access  Public (for scanner page)
  */
 const getRoomPublic = async (req, res) => {
-    const room = await Room.findOne({ slug: req.params.slug, isActive: true, isPublished: true });
-    if (!room) {
-        const err = new Error('Room not found or not published'); err.statusCode = 404; throw err;
+    const room = await Room.findOne({ slug: req.params.slug });
+    
+    if (!room || !room.isActive) {
+        const err = new Error('Room not found'); 
+        err.statusCode = 404; 
+        throw err;
+    }
+
+    if (!room.isPublished) {
+        const err = new Error('Room not published'); 
+        err.statusCode = 403; // Or 404 if you want to hide its existence
+        throw err;
     }
 
     const targets = await Target.find({
